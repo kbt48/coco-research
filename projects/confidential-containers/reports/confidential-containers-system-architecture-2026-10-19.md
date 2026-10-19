@@ -121,23 +121,23 @@ flowchart TB
 | CRI | API 境界 | RuntimeService と ImageService の gRPC インターフェース | 独立した VMM やプロセスの名前ではない [K1] |
 | containerd / CRI plugin | worker ホスト | CRI を実装し、sandbox・task・image・snapshotter・runtime を調整 | [CRI 設定][C1] |
 | Snapshotter | worker ホスト | rootfs snapshot 処理。CoCo 構成では通常のホスト展開を回避し guest pull に誘導 | [Nydus snapshotter][C3]・[Chart values][R4] |
-| RuntimeClass / runtime handler | Kubernetes オブジェクト／ホスト設定 | `runtimeClassName` と CRI の handler を対応させる | `kata-qemu-tdx`、`kata-qemu-snp` 等。作成だけでは実TEEを証明しない [K2][A3] |
-| Kata shim | worker ホスト | containerd runtime v2 と接続し、sandbox のライフサイクルと guest agent 呼出しを管理 | `containerd-shim-kata-v2` 等 [C2][R7] |
-| Kata runtime / runtime-rs | 主に worker ホスト | PodVM の構成、VMM 制御、デバイス・ネットワーク等の準備 | Go／Rust の実装差・構成差がある。別プロセスが常に一段ずつ存在するとは限らない [R6][R7] |
-| Hypervisor / VMM / KVM | ホスト user space／kernel | VM と vCPU・メモリ・デバイスを構成し、TEE モードで起動 | 代表例 QEMU + KVM。TEE 固有の起動設定が必要 [Q1][R9] |
-| TEE / セキュリティ firmware | CPU・プラットフォーム | ゲスト隔離、測定、Report／Quote の信頼根 | TDX、SEV-SNP、IBM Secure Execution 等。対応範囲は構成依存 [A0][R1] |
-| Guest firmware / kernel / rootfs | PodVM 内 | ゲストのブートとコンテナ実行基盤 | 測定・検証対象となる基盤。guest-components を含む rootfs／拡張イメージを使用 [A2][R9] |
-| kata-agent | PodVM 内 | host からの sandbox／container RPC を受け、コンテナの生成・開始等を実行 | Kata の guest agent。AA とは別。agent policy により操作制限 [R7][A5] |
+| RuntimeClass / runtime handler | Kubernetes オブジェクト／ホスト設定 | `runtimeClassName` と CRI の handler を対応させる | `kata-qemu-tdx`、`kata-qemu-snp` 等。作成だけでは実TEEを証明しない [K2]・[A3] |
+| Kata shim | worker ホスト | containerd runtime v2 と接続し、sandbox のライフサイクルと guest agent 呼出しを管理 | `containerd-shim-kata-v2` 等 [C2]・[R7] |
+| Kata runtime / runtime-rs | 主に worker ホスト | PodVM の構成、VMM 制御、デバイス・ネットワーク等の準備 | Go／Rust の実装差・構成差がある。別プロセスが常に一段ずつ存在するとは限らない [R6]・[R7] |
+| Hypervisor / VMM / KVM | ホスト user space／kernel | VM と vCPU・メモリ・デバイスを構成し、TEE モードで起動 | 代表例 QEMU + KVM。TEE 固有の起動設定が必要 [Q1]・[R9] |
+| TEE / セキュリティ firmware | CPU・プラットフォーム | ゲスト隔離、測定、Report／Quote の信頼根 | TDX、SEV-SNP、IBM Secure Execution 等。対応範囲は構成依存 [A0]・[R1] |
+| Guest firmware / kernel / rootfs | PodVM 内 | ゲストのブートとコンテナ実行基盤 | 測定・検証対象となる基盤。guest-components を含む rootfs／拡張イメージを使用 [A2]・[R9] |
+| kata-agent | PodVM 内 | host からの sandbox／container RPC を受け、コンテナの生成・開始等を実行 | Kata の guest agent。AA とは別。agent policy により操作制限 [R7]・[A5] |
 | image-rs | PodVM 内 | OCI image の取得・展開、署名確認等を扱う | [guest-components/image-rs][G3] |
 | ocicrypt-rs / image encryption | PodVM 内／準備環境 | 暗号化 layer の処理。鍵の取得は CDH 等に依頼 | [Encrypted Images][G8] |
 | CDH | PodVM 内 | image 復号鍵、秘密リソース、sealed secret 等の機密データ操作 | [Confidential Data Hub][G2] |
-| KBC / KBS Protocol Client | PodVM 内のライブラリ等 | KBS の認証・リソース要求、鍵・Token・JWE 処理 | CDH／AA との分担は選択した client・方式による [G1][G4] |
+| KBC / KBS Protocol Client | PodVM 内のライブラリ等 | KBS の認証・リソース要求、鍵・Token・JWE 処理 | CDH／AA との分担は選択した client・方式による [G1]・[G4] |
 | AA / TEE Attester | PodVM 内 | runtime data に対応する Evidence を TEE 経路から取得し、Token 取得を支援 | [Attestation Agent][G1] |
 | api-server-rest（ASR） | PodVM 内、利用構成に応じる | アプリから CDH 等への REST の窓口 | 公開する API・アクセス元を制限 [G9] |
 | KBS | 信頼する外部領域 | Challenge、AS 連携、Token 検証、resource policy、秘密情報の暗号化配布 | [Trustee][T1]・[KBS protocol][T2] |
-| AS | 信頼する外部領域 | TEE Evidence の真正性・TCB・binding の検証、policy 評価、署名付き結果発行 | [Attestation Service][T5][T6] |
+| AS | 信頼する外部領域 | TEE Evidence の真正性・TCB・binding の検証、policy 評価、署名付き結果発行 | [Attestation Service][T5]・[T6] |
 | RVPS | 信頼する外部領域 | Reference Value の登録・抽出・保存・照会 | CPU の Quote を直接発行せず、Secret 保管庫でもない [T7] |
-| Helm Charts / kata-deploy | 導入時の管理領域とノード | RuntimeClass、runtime 設定、ノードへの成果物配布 | CoCo の主導入経路。Trustee のデプロイは別途設計 [R2][R3][T9] |
+| Helm Charts / kata-deploy | 導入時の管理領域とノード | RuntimeClass、runtime 設定、ノードへの成果物配布 | CoCo の主導入経路。Trustee のデプロイは別途設計 [R2]・[R3]・[T9] |
 | 旧 CoCo Operator | 旧導入方式 | `CcRuntime` による runtime 管理 | 非推奨・archive。現行推奨経路は Helm [R5] |
 | Cloud API Adaptor / APF | Peer Pods のホスト・接続経路 | クラウド API で PodVM を生成、kata-agent RPC を転送 | [cloud-api-adaptor][P1] |
 
@@ -204,10 +204,10 @@ sequenceDiagram
 
 ### 3.1 誤読しやすい点
 
-- **CRI の PullImage 呼出しが消えるわけではない。** ホストが image 名・metadata・認証情報を扱うことと、機密 layer の平文をゲスト内で取得・展開することを区別する。CoCo v0.23.0 は authenticated registry の credentials がホストに露出する制約を明記している。[R1][G10]
-- **Attestation は PodVM 起動そのものと別の処理である。** 暗号化イメージではアプリ起動前の復号鍵取得で必要になり、アプリ用の秘密は起動後の要求で取得する場合もある。すべての Pod が同じ時点で一度だけ Attestation するとは限らない。[G8][G2]
-- **Pod が Running でも機密性の確認は終わらない。** RuntimeClass、実際の VMM 設定、Evidence、policy による拒否動作まで検証する。通常の Kata VM や開発用 runtime と実TEEを区別する。[A3][A2]
-- **イメージの暗号化と署名は目的が違う。** 暗号化は layer の内容を秘匿し、署名検証や digest 制約は許可されたコードであることを確認する。TEE の VM 測定値だけでは後から取得する任意の OCI image を自動的に承認できない。[G8][G11][A2]
+- **CRI の PullImage 呼出しが消えるわけではない。** ホストが image 名・metadata・認証情報を扱うことと、機密 layer の平文をゲスト内で取得・展開することを区別する。CoCo v0.23.0 は authenticated registry の credentials がホストに露出する制約を明記している。[R1]・[G10]
+- **Attestation は PodVM 起動そのものと別の処理である。** 暗号化イメージではアプリ起動前の復号鍵取得で必要になり、アプリ用の秘密は起動後の要求で取得する場合もある。すべての Pod が同じ時点で一度だけ Attestation するとは限らない。[G8]・[G2]
+- **Pod が Running でも機密性の確認は終わらない。** RuntimeClass、実際の VMM 設定、Evidence、policy による拒否動作まで検証する。通常の Kata VM や開発用 runtime と実TEEを区別する。[A3]・[A2]
+- **イメージの暗号化と署名は目的が違う。** 暗号化は layer の内容を秘匿し、署名検証や digest 制約は許可されたコードであることを確認する。TEE の VM 測定値だけでは後から取得する任意の OCI image を自動的に承認できない。[G8]・[G11]・[A2]
 
 通常の Kubernetes＋Kata は **1 Pod sandbox に 1 VM**というモデルで、コンテナごとに別 VM を作るモデルではない。Kubernetes を使わない単独コンテナの起動などには Pod の単位がなく、この原則をあらゆる Kata 利用形態の法則として扱わない。同じ Pod に相互不信なテナントを同居させる場合も、VM 境界での分離にはならない。[Kata Architecture][R7]
 
@@ -405,10 +405,10 @@ Confidential EmptyDir／Confidential Container Image Storage は guest 側で暗
 ### 7.3 Trustee 設定で見落としやすい点
 
 - 現行 CoCo AS の header JWK 方式では、KBS の `insecure_header_jwk = false` と信頼する `trusted_certs_paths` を設定する。`true` は署名自体を検証しても任意の署名鍵を受け入れ得る、試験用の設定である。[T4]
-- 「sample attester 以外を許可する」既定 resource policy は、期待する TCB や workload を絞った policy ではない。`affirming` だけでも、その評価を受ける別 workload への配布が許容される場合がある。要求 resource と承認済み workload の条件を追加する。[A6][T6]
+- 「sample attester 以外を許可する」既定 resource policy は、期待する TCB や workload を絞った policy ではない。`affirming` だけでも、その評価を受ける別 workload への配布が許容される場合がある。要求 resource と承認済み workload の条件を追加する。[A6]・[T6]
 - RVPS の sample extractor は署名検証を行わず、SWID/RIM extractor も manifest 署名を検証しない。投入前に真正性を確認する。RVPS の名称だけから、すべての provenance が署名検証されると推定しない。[T7]
 - 最新 Trustee Helm は KBS＋remote gRPC AS＋RVPS の構成で、KBS listener の既定は HTTP。guest が直接接続する endpoint の HTTPS、SAN、AS の署名・信頼アンカー、内部 RPC の到達制御を設計する。TLS Secret の変更後は KBS Deployment の再起動が必要と記載されている。[T9]
-- policy／参照値／リソース／session の永続化とバックアップを明示する。外部 PostgreSQL や Redis／Valkey を選ぶ場合、それらも Trustee の信頼領域に含める。[T7][T9]
+- policy／参照値／リソース／session の永続化とバックアップを明示する。外部 PostgreSQL や Redis／Valkey を選ぶ場合、それらも Trustee の信頼領域に含める。[T7]・[T9]
 
 ## 8. 配置方式と導入時の選択
 
@@ -435,7 +435,7 @@ flowchart LR
   VM <-->|"guest pull"| R["Registry"]
 ```
 
-この図は論理接続であり、APF の配置や network の詳細は provider ごとに確認する。Peer Pods でも Kubelet 全体を PodVM 内へ入れるモデルにはならず、Trustee の管理領域を誰が所有するかという問題は残る。[P1][A2]
+この図は論理接続であり、APF の配置や network の詳細は provider ごとに確認する。Peer Pods でも Kubelet 全体を PodVM 内へ入れるモデルにはならず、Trustee の管理領域を誰が所有するかという問題は残る。[P1]・[A2]
 
 ### 8.2 版を固定する単位
 
@@ -450,7 +450,7 @@ flowchart LR
 | Trustee | KBS／AS／RVPS revision、protocol 版、storage と session backend |
 | セキュリティ構成 | 証明書・信頼アンカーの識別子、policy revision、Init-Data hash、Reference Values、workload image digest |
 
-CoCo v0.23.0 → kata-deploy 4.2.0 → Kata `versions.yaml` の Trustee／guest-components 固定 SHA、という依存を追跡できる。第12節では、このリリース基準と調査時の開発ブランチを別に記録した。[R3][R4][V1]
+CoCo v0.23.0 → kata-deploy 4.2.0 → Kata `versions.yaml` の Trustee／guest-components 固定 SHA、という依存を追跡できる。第12節では、このリリース基準と調査時の開発ブランチを別に記録した。[R3]・[R4]・[V1]
 
 ## 9. 導入検証ロードマップ
 
@@ -485,13 +485,13 @@ CoCo v0.23.0 → kata-deploy 4.2.0 → Kata `versions.yaml` の Trustee／guest-
 | 依存サービス停止 | KBS／AS／RVPS／registry 到達不可 | 想定したエラー・再試行。平文 fallback を起こさない |
 | rollback | 過去の暗号化 volume 全体へ差替え | 基盤だけでは拒否できない構成は限界として記録。必要なら外部 freshness 機構で検出 |
 
-nonce 試験は「値をもう一度送れば常に拒否」と単純化せず、**別 session の challenge への不一致、session の有効期限、Token の期限**を分けて再現する。Token の有効期間内で毎回ハードウェア再証明が行われるとは限らない。Secret の失効・再配布を止めても、既に guest に配った長期鍵は自動消去されないため、用途別 TTL・rotation・アプリ側失効を設計する。[T2][T3][T4]
+nonce 試験は「値をもう一度送れば常に拒否」と単純化せず、**別 session の challenge への不一致、session の有効期限、Token の期限**を分けて再現する。Token の有効期間内で毎回ハードウェア再証明が行われるとは限らない。Secret の失効・再配布を止めても、既に guest に配った長期鍵は自動消去されないため、用途別 TTL・rotation・アプリ側失効を設計する。[T2]・[T3]・[T4]
 
 ### 9.3 性能・運用で残す値
 
 Pod の cold／warm 起動、image download・検証・復号・展開、Attestation の verifier／collateral 取得、KBS resource 応答を分けて計測する。p50／p95、同時起動数、再試行率、VM memory、image size、network条件を記録し、単なる「Running になるまでの時間」からボトルネックを切り分ける。
 
-TCB・guest image 更新では、旧／新の測定値を承認する期間、旧版の許可削除、失敗時の復旧を設計する。高可用性では KBS replica だけでなく session、policy、Reference Values、resource backend、AS signer の整合も検証する。[T7][T9] 具体的な SLO・測定値は PoC 後に対象配下の `experiments/<name>/` へ記録する。
+TCB・guest image 更新では、旧／新の測定値を承認する期間、旧版の許可削除、失敗時の復旧を設計する。高可用性では KBS replica だけでなく session、policy、Reference Values、resource backend、AS signer の整合も検証する。[T7]・[T9] 具体的な SLO・測定値は PoC 後に対象配下の `experiments/<name>/` へ記録する。
 
 ## 10. 用語集
 
@@ -547,11 +547,11 @@ TCB・guest image 更新では、旧／新の測定値を承認する期間、�
 
 | 確認した差分 | 本書での扱い |
 |---|---|
-| KBS protocol 文書に旧 `0.1.1` Request 例、旧単純 JWT の例が残る | CoCo v0.23.0 の protocol は 0.4.0。現行 AS の EAR と client／server 実装を優先 [R1][T2][T5] |
-| Get Attestation に Init-Data は Peer Pods のみとの文言が残る | Init-Data 専用資料と現行仕様には TDX／SNP の hardware binding がある。旧文言を全構成に一般化しない [A7][A4][T16] |
-| Init-Data は `0.1.0`、Encrypted Images の CAA例には `0.1.1` がある | 例を無検証で転写せず、対象revisionの parser／対応形式を確認 [A4][G8][T16] |
-| Init-Data の簡略 agent policy 例が「特定imageのみ」と説明されるが `default CreateContainerRequest := true` を含む | 安全な完成policyとして使わず、生成・review・負例試験を行う [A4][A5] |
-| Kata単体とCoCoの出荷設定差 | Rust shim の上流方針からCoCoの既定を推測しない。CoCo chartの出荷値を確認 [R1][R4] |
+| KBS protocol 文書に旧 `0.1.1` Request 例、旧単純 JWT の例が残る | CoCo v0.23.0 の protocol は 0.4.0。現行 AS の EAR と client／server 実装を優先 [R1]・[T2]・[T5] |
+| Get Attestation に Init-Data は Peer Pods のみとの文言が残る | Init-Data 専用資料と現行仕様には TDX／SNP の hardware binding がある。旧文言を全構成に一般化しない [A7]・[A4]・[T16] |
+| Init-Data は `0.1.0`、Encrypted Images の CAA例には `0.1.1` がある | 例を無検証で転写せず、対象revisionの parser／対応形式を確認 [A4]・[G8]・[T16] |
+| Init-Data の簡略 agent policy 例が「特定imageのみ」と説明されるが `default CreateContainerRequest := true` を含む | 安全な完成policyとして使わず、生成・review・負例試験を行う [A4]・[A5] |
+| Kata単体とCoCoの出荷設定差 | Rust shim の上流方針からCoCoの既定を推測しない。CoCo chartの出荷値を確認 [R1]・[R4] |
 
 これらは確認した固定 revision の状態である。上流で修正された場合は、調査日と revision を付けて更新する。古いブログは概念の理解に用い、現行 protocol・claim path・コマンドの確定には固定ソースを優先する。
 
