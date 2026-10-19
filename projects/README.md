@@ -6,6 +6,7 @@
 
 | 対象 | 資料 |
 |---|---|
+| [Confidential Containers](confidential-containers/README.md) | 全体構成・Pod 起動・Attestation・信頼境界・導入検証 |
 | [Trustee](trustee/README.md) | アーキテクチャ・Attestation・PoC 調査 |
 
 ## 新しい対象の追加

@@ -10,6 +10,8 @@ Trustee に関する技術調査と実証実験を管理します。
 
 調査対象、用語、構成図、参照元は各レポートに記載します。
 
+Kubernetes、Kata、PodVM と Trustee の接続を俯瞰する場合は、[Confidential Containers の全体システム調査](../confidential-containers/reports/confidential-containers-system-architecture-2026-10-19.md)を参照してください。
+
 ## 一次情報
 
 - [Trustee 公式リポジトリ](https://github.com/confidential-containers/trustee)

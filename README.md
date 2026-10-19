@@ -6,6 +6,7 @@ Confidential Computing に関する技術調査、設計整理、実証実験を
 
 | 対象 | 内容 |
 |---|---|
+| [Confidential Containers](projects/confidential-containers/README.md) | Kubernetes・Kata・TEE・Trustee を横断した全体構成と導入検証ロードマップ |
 | [Trustee](projects/trustee/README.md) | アーキテクチャ、Attestation、PoC の調査レポート |
 
 対象技術の一覧と追加方法は [projects](projects/README.md) を参照してください。
@@ -17,6 +18,10 @@ coco-research/
 ├── README.md
 └── projects/
     ├── README.md
+    ├── confidential-containers/
+    │   ├── README.md
+    │   └── reports/
+    │       └── confidential-containers-system-architecture-2026-10-19.md
     └── trustee/
         ├── README.md
         └── reports/
