@@ -7,6 +7,7 @@ Confidential Computing に関する技術調査、設計整理、実証実験を
 | 対象 | 内容 |
 |---|---|
 | [Confidential Containers](projects/confidential-containers/README.md) | Kubernetes・Kata・TEE・Trustee を横断した全体構成と導入検証ロードマップ |
+| [Cloud API Adaptor / Peer Pods](projects/cloud-api-adaptor/README.md) | remote hypervisor、PodVM の起動・通信・資源管理、信頼境界と導入検証 |
 | [Trustee](projects/trustee/README.md) | アーキテクチャ、Attestation、PoC の調査レポート |
 | [TEEのライフサイクルとセキュリティ](topics/tee-lifecycle-security/README.md) | 常駐推論のリスク、証明・鍵の寿命、失効・交換と受入試験 |
 
@@ -19,6 +20,12 @@ coco-research/
 ├── README.md
 ├── projects/
 │   ├── README.md
+│   ├── cloud-api-adaptor/
+│   │   ├── README.md
+│   │   ├── reports/
+│   │   │   └── cloud-api-adaptor-architecture-security-2026-10-21.md
+│   │   └── assets/
+│   │       └── cloud-api-adaptor-sources-2026-10-21.json
 │   ├── confidential-containers/
 │   │   ├── README.md
 │   │   └── reports/

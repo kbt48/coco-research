@@ -12,6 +12,8 @@ Confidential Containers（CoCo）の全体システム、Kubernetes／Kata Conta
 
 常駐・短命CVMの比較、推論中の状態保持、再証明・失効・交換については、横断テーマの[常駐型TEEのリスクと対応](../../topics/tee-lifecycle-security/reports/long-running-tee-inference-security-2026-10-21.md)を参照してください。
 
+Peer Pods の構成、クラウド VM 起動、ネットワーク、資源管理と信頼境界の詳細は [Cloud API Adaptor の調査](../cloud-api-adaptor/README.md) を参照してください。
+
 ## 一次情報
 
 - [Confidential Containers 公式 docs](https://confidentialcontainers.org/docs/)

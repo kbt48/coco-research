@@ -1,0 +1,431 @@
+{
+  "schema_version": 1,
+  "investigated_on": "2026-10-21",
+  "timezone": "Asia/Tokyo",
+  "method": "Official documentation and static source inspection; no cloud deployment, TEE validation, performance benchmark, or upstream CI certification performed.",
+  "upstream": {
+    "repository": "confidential-containers/cloud-api-adaptor",
+    "main_commit": "2c15720affbf63288b2db91f41356e0558bbdaec",
+    "main_committer_date_utc": "2026-10-19T16:49:51Z",
+    "release": "v0.23.0",
+    "release_commit": "e3e0f00480b41c08e3e4dbc6b64aba7722fb65f9",
+    "release_published_at": "2026-09-23T09:05:39Z"
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "purpose": "Peer Pods の構成・設計上の制約",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "docs/architecture.md",
+      "blob_sha": "d32b079ac0cbd632e885faa9dc2e2f1c1ae63000",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/docs/architecture.md"
+    },
+    {
+      "id": "S2",
+      "purpose": "CreateVM / StartVM / StopVM の実装",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/pkg/adaptor/cloud/cloud.go",
+      "blob_sha": "9a97384c8ff32d393b2b8d16653b7b58758c3768",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/pkg/adaptor/cloud/cloud.go"
+    },
+    {
+      "id": "S3",
+      "purpose": "remote hypervisor の Unix socket / ttRPC",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/pkg/adaptor/server.go",
+      "blob_sha": "6251435f21950826914e7dfe23e7b199370e3a63",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/pkg/adaptor/server.go"
+    },
+    {
+      "id": "S4",
+      "purpose": "Worker 側 Agent Proxy",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/pkg/adaptor/proxy/proxy.go",
+      "blob_sha": "921bebb5ce3d0c4adc64af18690694a48bccc648",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/pkg/adaptor/proxy/proxy.go"
+    },
+    {
+      "id": "S5",
+      "purpose": "APF / TCP 15150",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/pkg/forwarder/forwarder.go",
+      "blob_sha": "f45bcdf5f5dd7add49b80906639a6fbd403e83fd",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/pkg/forwarder/forwarder.go"
+    },
+    {
+      "id": "S6",
+      "purpose": "mTLS と初期鍵配送の信頼モデル",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/docs/tls-proxy-forwarder.md",
+      "blob_sha": "885431b0c63665dc82e4792919e4f23037a9b705",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/docs/tls-proxy-forwarder.md"
+    },
+    {
+      "id": "S7",
+      "purpose": "VXLAN / UDP 4789",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/pkg/podnetwork/tunneler/vxlan/workernode.go",
+      "blob_sha": "b6aa5580fcae21972b935837026955d9af401cd6",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/pkg/podnetwork/tunneler/vxlan/workernode.go"
+    },
+    {
+      "id": "S8",
+      "purpose": "実験的な外部通信経路と NetworkPolicy",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/docs/external-network.md",
+      "blob_sha": "418b0c2c97496962f47e45dad09ee93ea8caecce",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/docs/external-network.md"
+    },
+    {
+      "id": "S9",
+      "purpose": "拡張リソースと Pod overhead",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/docs/resource-management.md",
+      "blob_sha": "05887c468a18296d1f0e69d47969482bdf8ed9d7",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/docs/resource-management.md"
+    },
+    {
+      "id": "S10",
+      "purpose": "Webhook の正確な annotation 名・変換",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/webhook/pkg/mutating/remove-resourcespec.go",
+      "blob_sha": "268bf52808f70b2014a56d23d95887b001178732",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/webhook/pkg/mutating/remove-resourcespec.go"
+    },
+    {
+      "id": "S11",
+      "purpose": "共通の instance type 選択ロジック",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/util.go",
+      "blob_sha": "288c0fb894986e2a2b041afd22bb6aeb581a0fed",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/util.go"
+    },
+    {
+      "id": "S12",
+      "purpose": "PeerPod CR・finalizer による回収",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/peerpod-ctrl/README.md",
+      "blob_sha": "641714251797413ed9182a223c7408e962015468",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/peerpod-ctrl/README.md"
+    },
+    {
+      "id": "S13",
+      "purpose": "initdata の指定と展開",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/docs/initdata.md",
+      "blob_sha": "68eef9e605b3f5bc87b913f6ec076d3bdb14d381",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/docs/initdata.md"
+    },
+    {
+      "id": "S14",
+      "purpose": "Kata からの initdata 再エンコード",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/pkg/util/cloud.go",
+      "blob_sha": "9e9490bc4f566b59fca6e1c8a9710027698ff9a7",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/pkg/util/cloud.go"
+    },
+    {
+      "id": "S15",
+      "purpose": "initdata のハッシュ対象",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/pkg/initdata/initdata.go",
+      "blob_sha": "916fd3cb2bab205e27ad91c5fab62d54a800679f",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/pkg/initdata/initdata.go"
+    },
+    {
+      "id": "S16",
+      "purpose": "initdata のファイル展開と digest 作成",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/pkg/userdata/provision.go",
+      "blob_sha": "7c50f4c982e6c53be25c3a23f7e5e42c20601922",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/pkg/userdata/provision.go"
+    },
+    {
+      "id": "S17",
+      "purpose": "Agent Policy の既定値",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/docs/policy.md",
+      "blob_sha": "b51ff6f841771c9b2b79bbcab6ac282b236b20a4",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/docs/policy.md"
+    },
+    {
+      "id": "S18",
+      "purpose": "初期設定配送と workload 制約の信頼モデル",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/docs/sftp_vs_metadata_approach_security.md",
+      "blob_sha": "e0482e38281eb15791d7621abb0fcc3c9413a4c1",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/docs/sftp_vs_metadata_approach_security.md"
+    },
+    {
+      "id": "S19",
+      "purpose": "Provider インターフェース",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/types.go",
+      "blob_sha": "9f8a9963241b49844cf7bdc8e17064c68d0d9dda",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/types.go"
+    },
+    {
+      "id": "S20",
+      "purpose": "AWS の VM 起動と SEV-SNP オプション",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/aws/provider.go",
+      "blob_sha": "f90a235bc951b8fb167bae8ac0e76c87c80178c3",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/aws/provider.go"
+    },
+    {
+      "id": "S21",
+      "purpose": "Azure CVM / TrustedLaunch の選択",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/azure/provider.go",
+      "blob_sha": "14dd92bf6d6022a16a773af8c287cd421a8753e2",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/azure/provider.go"
+    },
+    {
+      "id": "S22",
+      "purpose": "GCP confidential type と maintenance 設定",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/gcp/provider.go",
+      "blob_sha": "681237670660fd65004bbdb60b002a11d7532cec",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/gcp/provider.go"
+    },
+    {
+      "id": "S23",
+      "purpose": "Alibaba Cloud TDX 設定",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/alibabacloud/provider.go",
+      "blob_sha": "389f2d112515b3661be9325f6bfba1e987c787a4",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/alibabacloud/provider.go"
+    },
+    {
+      "id": "S24",
+      "purpose": "IBM Cloud VPC TDX 設定",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/ibmcloud/provider.go",
+      "blob_sha": "8e16fca1e6d319fc4a52911d3ee686374914abfb",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/ibmcloud/provider.go"
+    },
+    {
+      "id": "S25",
+      "purpose": "PowerVS 実装・独自のサイズ選択",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/ibmcloudpowervs/provider.go",
+      "blob_sha": "5250c10baa7781588713748218656c01e03c3f0b",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/ibmcloudpowervs/provider.go"
+    },
+    {
+      "id": "S26",
+      "purpose": "libvirt の launch security 検出",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/libvirt/libvirt.go",
+      "blob_sha": "c93572fdb6c704975009f1d6ba271af54f1f7957",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/libvirt/libvirt.go"
+    },
+    {
+      "id": "S27",
+      "purpose": "BYOM の VM pool 割当・返却",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/byom/provider.go",
+      "blob_sha": "44f6126e09a2da0f3f274fb1015a4ec04d24814e",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/byom/provider.go"
+    },
+    {
+      "id": "S28",
+      "purpose": "BYOM の SSH host key 設定",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/byom/README.md",
+      "blob_sha": "6139a13811a5ebaf80ecc7542f173f1d1bc533c9",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/byom/README.md"
+    },
+    {
+      "id": "S29",
+      "purpose": "main のデプロイ設定",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/install/charts/peerpods/values.yaml",
+      "blob_sha": "4862d870842cdfd76afdeae93741aa16b6f782b2",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/install/charts/peerpods/values.yaml"
+    },
+    {
+      "id": "S30",
+      "purpose": "DaemonSet の権限・hostNetwork・mount",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/install/charts/peerpods/templates/daemonset.yaml",
+      "blob_sha": "1beb95d484becae96a0e65130775aac530b987ef",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/install/charts/peerpods/templates/daemonset.yaml"
+    },
+    {
+      "id": "S31",
+      "purpose": "main の Helm 依存関係",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/install/charts/peerpods/Chart.yaml",
+      "blob_sha": "d95e0c451588987657afd53f3db7dd37b4c581ca",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/install/charts/peerpods/Chart.yaml"
+    },
+    {
+      "id": "S32",
+      "purpose": "Helm・Secret 管理・image tag",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/install/charts/peerpods/README.md",
+      "blob_sha": "a6d05dedd523018192e6dc5fc52ac7b1f597b237",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/install/charts/peerpods/README.md"
+    },
+    {
+      "id": "S33",
+      "purpose": "導入手順・worker node label",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/install/README.md",
+      "blob_sha": "88a5926c711d12c47b89eff5ffc9fbd195c84a69",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/install/README.md"
+    },
+    {
+      "id": "S34",
+      "purpose": "PodVM ビルドと attester",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/podvm/README.md",
+      "blob_sha": "94c6564a4cbabfc70856a3843168ff9334dfb9cf",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/podvm/README.md"
+    },
+    {
+      "id": "S35",
+      "purpose": "main の Kata / guest-components 等の pin",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/versions.yaml",
+      "blob_sha": "4e14a07f2079a83606d3a7634eaaede737a9c825",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/versions.yaml"
+    },
+    {
+      "id": "S36",
+      "purpose": "Developer Mode の残存 VM",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/docs/troubleshooting/README.md",
+      "blob_sha": "98f049d1272b1823260bf6fdadcf3207d6534272",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/docs/troubleshooting/README.md"
+    },
+    {
+      "id": "S37",
+      "purpose": "README の providers 一覧との比較",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/README.md",
+      "blob_sha": "fb41064f110bf01f5dfc25302657bd0850f5268f",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/README.md"
+    },
+    {
+      "id": "S38",
+      "purpose": "Kata remote hypervisor の呼出し",
+      "repository": "kata-containers/kata-containers",
+      "revision": "d130fbdb929291c8c8c60cf5fdf7cbc7b06d02f9",
+      "path": "src/runtime/virtcontainers/remote.go",
+      "blob_sha": "caf431ac72a6c2c3989b3dddc637876ec775ef68",
+      "url": "https://github.com/kata-containers/kata-containers/blob/d130fbdb929291c8c8c60cf5fdf7cbc7b06d02f9/src/runtime/virtcontainers/remote.go"
+    },
+    {
+      "id": "S39",
+      "purpose": "CoCo 公式設計概要",
+      "url": "https://confidentialcontainers.org/docs/architecture/design-overview/",
+      "kind": "official documentation",
+      "read_method": "web open"
+    },
+    {
+      "id": "S40",
+      "purpose": "Kata Agent Policy の適用と制限",
+      "repository": "kata-containers/kata-containers",
+      "revision": "d130fbdb929291c8c8c60cf5fdf7cbc7b06d02f9",
+      "path": "docs/how-to/how-to-use-the-kata-agent-policy.md",
+      "blob_sha": "030a47054d3a241cb4d7a0a19b6ecb804712f376",
+      "url": "https://github.com/kata-containers/kata-containers/blob/d130fbdb929291c8c8c60cf5fdf7cbc7b06d02f9/docs/how-to/how-to-use-the-kata-agent-policy.md"
+    },
+    {
+      "id": "S41",
+      "purpose": "v0.23.0 リリースノート",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "e3e0f00480b41c08e3e4dbc6b64aba7722fb65f9",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/releases/tag/v0.23.0",
+      "kind": "release",
+      "published_at": "2026-09-23T09:05:39Z",
+      "read_method": "GitHub releases API and web open"
+    },
+    {
+      "id": "S42",
+      "purpose": "GCP の provider 設定",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-api-adaptor/install/charts/peerpods/providers/gcp.yaml",
+      "blob_sha": "565dcbec0493f02a9d2ad04e24e05388676cdd07",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-api-adaptor/install/charts/peerpods/providers/gcp.yaml"
+    },
+    {
+      "id": "S43",
+      "purpose": "libvirt の CVM 選択",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "path": "src/cloud-providers/libvirt/provider.go",
+      "blob_sha": "a6214c01074d66bf323b28f957a055c279104eaf",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers/libvirt/provider.go"
+    },
+    {
+      "id": "S44",
+      "purpose": "provider 実装と Helm provider ファイルの tree",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "2c15720affbf63288b2db91f41356e0558bbdaec",
+      "tree_sha": "a053329879303d55735eb5cd5f9dccce2c854607",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/tree/2c15720affbf63288b2db91f41356e0558bbdaec/src/cloud-providers",
+      "kind": "git tree",
+      "api_url": "https://api.github.com/repos/confidential-containers/cloud-api-adaptor/git/trees/2c15720affbf63288b2db91f41356e0558bbdaec?recursive=1",
+      "provider_directories": [
+        "alibabacloud",
+        "aws",
+        "azure",
+        "byom",
+        "gcp",
+        "ibmcloud",
+        "ibmcloudpowervs",
+        "libvirt"
+      ]
+    },
+    {
+      "id": "S45",
+      "purpose": "v0.23.0 の Helm chart 依存関係",
+      "repository": "confidential-containers/cloud-api-adaptor",
+      "revision": "e3e0f00480b41c08e3e4dbc6b64aba7722fb65f9",
+      "path": "src/cloud-api-adaptor/install/charts/peerpods/Chart.yaml",
+      "blob_sha": "05af8697a70df945dce871ab23e1e95bf9ee5ce0",
+      "url": "https://github.com/confidential-containers/cloud-api-adaptor/blob/e3e0f00480b41c08e3e4dbc6b64aba7722fb65f9/src/cloud-api-adaptor/install/charts/peerpods/Chart.yaml"
+    }
+  ]
+}
