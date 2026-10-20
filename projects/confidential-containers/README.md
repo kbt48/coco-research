@@ -10,6 +10,8 @@ Confidential Containers（CoCo）の全体システム、Kubernetes／Kata Conta
 
 全体の読み方は上記レポート、Trustee 単体の構築・鍵・API の詳細は [Trustee の調査一覧](../trustee/README.md) を参照してください。レポートの正本を対象ごとに管理し、他の領域からリンクします。
 
+常駐・短命CVMの比較、推論中の状態保持、再証明・失効・交換については、横断テーマの[常駐型TEEのリスクと対応](../../topics/tee-lifecycle-security/reports/long-running-tee-inference-security-2026-10-21.md)を参照してください。
+
 ## 一次情報
 
 - [Confidential Containers 公式 docs](https://confidentialcontainers.org/docs/)

@@ -8,29 +8,36 @@ Confidential Computing に関する技術調査、設計整理、実証実験を
 |---|---|
 | [Confidential Containers](projects/confidential-containers/README.md) | Kubernetes・Kata・TEE・Trustee を横断した全体構成と導入検証ロードマップ |
 | [Trustee](projects/trustee/README.md) | アーキテクチャ、Attestation、PoC の調査レポート |
+| [TEEのライフサイクルとセキュリティ](topics/tee-lifecycle-security/README.md) | 常駐推論のリスク、証明・鍵の寿命、失効・交換と受入試験 |
 
-対象技術の一覧と追加方法は [projects](projects/README.md) を参照してください。
+対象技術の一覧と追加方法は [projects](projects/README.md)、複数技術に共通する課題は [topics](topics/README.md) を参照してください。
 
 ## 現在の構成
 
 ```text
 coco-research/
 ├── README.md
-└── projects/
+├── projects/
+│   ├── README.md
+│   ├── confidential-containers/
+│   │   ├── README.md
+│   │   └── reports/
+│   │       └── confidential-containers-system-architecture-2026-10-19.md
+│   └── trustee/
+│       ├── README.md
+│       └── reports/
+│           └── trustee-architecture-attestation-poc-report-2026-10-19.md
+└── topics/
     ├── README.md
-    ├── confidential-containers/
-    │   ├── README.md
-    │   └── reports/
-    │       └── confidential-containers-system-architecture-2026-10-19.md
-    └── trustee/
+    └── tee-lifecycle-security/
         ├── README.md
         └── reports/
-            └── trustee-architecture-attestation-poc-report-2026-10-19.md
+            └── long-running-tee-inference-security-2026-10-21.md
 ```
 
 ## 分類と拡張方針
 
-`projects/` を対象技術ごとの入口とします。以下の拡張先は資料を追加する際に作成します。
+`projects/` を対象技術ごと、`topics/` を横断テーマの入口とします。未作成の拡張先は資料を追加する際に作成します。
 
 | パス | 用途 |
 |---|---|
@@ -53,3 +60,4 @@ coco-research/
 - 文書間の参照には相対リンクを使用します。
 - 検証資料には実行条件、手順、結果、再現に必要な設定を記録します。
 - 新しい対象を追加する際は、このページと `projects/README.md` の調査一覧を更新します。
+- 横断テーマを追加する際は、このページと `topics/README.md` の一覧を更新し、関連する対象技術の README からリンクします。

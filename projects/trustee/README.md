@@ -12,6 +12,8 @@ Trustee に関する技術調査と実証実験を管理します。
 
 Kubernetes、Kata、PodVM と Trustee の接続を俯瞰する場合は、[Confidential Containers の全体システム調査](../confidential-containers/reports/confidential-containers-system-architecture-2026-10-19.md)を参照してください。
 
+鍵配布停止とロード済み秘密の扱い、再証明の限界、既存環境の失効・交換は、横断テーマの[常駐型TEEのリスクと対応](../../topics/tee-lifecycle-security/reports/long-running-tee-inference-security-2026-10-21.md)で扱います。
+
 ## 一次情報
 
 - [Trustee 公式リポジトリ](https://github.com/confidential-containers/trustee)
